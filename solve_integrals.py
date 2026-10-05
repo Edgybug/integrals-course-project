@@ -14,16 +14,7 @@ def integrate(f, a, b, n):
 
     return total_area
 
-def my_function(x):
-    return 3 * x**2
-
-result = integrate(my_function, 0, 2, 10)
-result1 = integrate(my_function, 0, 2, 100)
-result2 = integrate(my_function, 0, 2, 1000)
-result3 = integrate(my_function, 0, 2, 10000)
+def function_to_integrate(x):
+    return x**2
 
 
-print(f"Calculated area with n 10: {result}")
-print(f"Calculated area with n 100: {result1}")
-print(f"Calculated area with n 1000: {result2}")
-print(f"Calculated area with n 10000: {result3}")
