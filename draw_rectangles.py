@@ -18,21 +18,26 @@ def draw_rect(ax, color, start_x, start_y, width, height):
 
 
 def draw_riemann_rectangles(a, b, n, f):
-    # curve points
+
+    # Curve points
     x = np.linspace(a, b, 1000)
     y = f(x)
 
-    # 
-    dx = (b-a) / n # widht of every rect
+    # Rectangle values
+    dx = (b-a) / n # width of every rect
     x_bars = np.linspace(a, b - dx, n) 
     y_bars = f(x_bars)
 
     plt.figure(figsize=(8, 5))
+
+    # Draw the curve
     plt.plot(x, y, 'r', linewidth=2, label='$f(x) = x^2$')
 
+    # Draw the rectangles
     plt.bar(x_bars, y_bars, width=dx, align='edge', 
             alpha=0.3, edgecolor='blue', color='skyblue', label='Left Riemann Sum')
 
+    # Making the graphic look better
     plt.title(f"Left Riemann sum for {n} rectangles")
     plt.xlabel("x")
     plt.ylabel("f(x)")
