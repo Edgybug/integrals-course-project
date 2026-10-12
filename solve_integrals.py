@@ -14,7 +14,4 @@ def integrate(f, a, b, n):
 
     return total_area
 
-def function_to_integrate(x):
-    return x**2
-
 

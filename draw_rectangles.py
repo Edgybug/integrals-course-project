@@ -41,7 +41,7 @@ def draw_riemann_rectangles(a, b, n, f):
     plt.title(f"Left Riemann sum for {n} rectangles")
     plt.xlabel("x")
     plt.ylabel("f(x)")
-    plt.xlim(a - 0.5, b + 0.5)
+    plt.xlim(a, b)
     plt.grid(True, linestyle='--', alpha=0.5)
     plt.legend()
     plt.show()
