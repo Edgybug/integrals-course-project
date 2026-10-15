@@ -17,31 +17,23 @@ def draw_prism(ax, f, x, y, dx, dy, color="teal"):
     )
 
 #Draw 3d surfaces
-def draw_3d_surface(ax, f, x_min, x_max, y_min, y_max, markers=True):
-    # Define the restricted domain for X and Y
+def draw_3d_surface(ax, f, x_min, x_max, y_min, y_max, points = None, markers=True):
+    # Define the x and y domains
     x = np.linspace(x_min, x_max, 100)
     y = np.linspace(y_min, y_max, 100)
 
     # Generate a 2D coordinate grid from the 1D arrays
     X, Y = np.meshgrid(x, y)
 
-    Z = f(X, Y)
+    Z = f(X, Y) 
 
     # Plot the surface
     surf = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.4, edgecolor='none')
 
-    if markers:
-        # Define specific coordinate pairs (X, Y) to drop height lines from
-        points_to_measure = [
-            (0, 0),    
-            (2, 3),    
-            (2, 0),     
-            (0, 3),      
-            (1, 1.5),    
-            (1.5, 2.5)   
-        ]
+    
+    if markers and points: 
         # Calculate and draw height for specific points 
-        for px, py in points_to_measure:
+        for px, py in points:
             pz = f(px, py)  
 
             # Draw a vertical dotted line from Z = 0 to Z = pz
