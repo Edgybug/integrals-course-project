@@ -3,7 +3,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def draw_rect(ax, color, start_x, start_y, width, height):
-   
+    """Draw a rectangle on the given axes.
+
+    Args:
+        ax: Matplotlib axes on which to draw the rectangle.
+        color: Color of the rectangle's outline.
+        start_x: X-coordinate of the rectangle's lower-left corner.
+        start_y: Y-coordinate of the rectangle's lower-left corner.
+        width: Width of the rectangle.
+        height: Height of the rectangle.
+    """
     rect = patches.Rectangle(
         (start_x, start_y), 
         width, 
@@ -16,22 +25,30 @@ def draw_rect(ax, color, start_x, start_y, width, height):
     ax.add_patch(rect)
 
 def draw_riemann_rectangles(a, b, n, f):
+    """Plot a function and approximate its integral using left Riemann rectangles.
 
-    # Curve points
+    Args:
+        a: Lower limit of integration.
+        b: Upper limit of integration.
+        n: Number of rectangles.
+        f: Function to plot and integrate approximately.
+    """
+
+    # Generate points for drawing a smooth function curve
     x = np.linspace(a, b, 1000)
     y = f(x)
 
-    # Rectangle values
-    dx = (b-a) / n # width of every rect
+    # Calculate the width and heights of the left-endpoint rectangles
+    dx = (b-a) / n 
     x_bars = np.linspace(a, b - dx, n) 
     y_bars = f(x_bars)
                          
     plt.figure(figsize=(8, 5))
 
-    # Draw the curve
-    plt.plot(x, y, 'r', linewidth=2, label='$f(x) = x^2$')
+    # Plot the function curve
+    plt.plot(x, y, 'r', linewidth=2, label='Function')
 
-    # Draw the rectangles
+   # Draw the rectangles using the function value at each left endpoint
     plt.bar(x_bars, 
             y_bars, 
             width=dx, 
@@ -41,7 +58,7 @@ def draw_riemann_rectangles(a, b, n, f):
             color='skyblue', 
             label='Left Riemann Sum')
 
-    # Making the graphic look better
+    # Add chart labels and formatting
     plt.title(f"Left Riemann sum for {n} rectangles")
     plt.xlabel("x")
     plt.ylabel("f(x)")

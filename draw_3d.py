@@ -1,14 +1,22 @@
 import numpy as np
 
-#Draw prisms 
+#Draw prism
 def draw_prism(ax, f, x, y, dx, dy, color="teal"):
+    """Draw a rectangular prism representing a small volume under a surface.
 
-    # Use the function value at the lower-left corner
+    Args:
+        ax: Matplotlib 3D axes on which to draw the prism.
+        f: Function of two variables, f(x, y).
+        x, y: Coordinates of the prism's lower-left corner.
+        dx, dy: Dimensions of the prism along the x- and y-axes.
+        color: Color of the prism.
+    """
+    # Use the function value at the lower-left corner to approximate the height
     height = f(x, y)
 
     ax.bar3d(
-        x, y, 0,       # base position
-        dx, dy, height, # base dimensions and height
+        x, y, 0,        # Base position
+        dx, dy, height,  # Width, depth, and height
         color=color,
         alpha=0.85,
         edgecolor="black",
@@ -18,32 +26,43 @@ def draw_prism(ax, f, x, y, dx, dy, color="teal"):
 
 #Draw 3d surfaces
 def draw_3d_surface(ax, f, x_min, x_max, y_min, y_max, points = None, markers=True):
-    # Define the x and y domains
+    """Plot a 3D surface and optionally mark selected points and their heights.
+
+    Args:
+        ax: Matplotlib 3D axes on which to draw the surface.
+        f: Function of two variables, f(x, y).
+        x_min, x_max: Lower and upper limits along the x-axis.
+        y_min, y_max: Lower an                         upper limits along the y-axis.
+        points: Optional list of (x, y) coordinates to mark.
+        markers: Whether to display height markers for the selected points.
+    """
+
+    # Generate coordinate values for the surface
     x = np.linspace(x_min, x_max, 100)
     y = np.linspace(y_min, y_max, 100)
 
-    # Generate a 2D coordinate grid from the 1D arrays
+    # Create a 2D coordinate grid from the 1D arrays
     X, Y = np.meshgrid(x, y)
 
+    # Calculate the height of the surface at each grid point
     Z = f(X, Y) 
 
     # Plot the surface
-    surf = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.4, edgecolor='none')
+    ax.plot_surface(
+        X, Y, Z,
+        cmap='viridis',
+        alpha=0.4,
+        edgecolor='none'
+    )
 
-    
+    # Add height markers only when enabled and points are provided
     if markers and points: 
-        # Calculate and draw height for specific points 
         for px, py in points:
             pz = f(px, py)  
 
-            # Draw a vertical dotted line from Z = 0 to Z = pz
+            # Draw a vertical dotted line from the base plane to the surface
             ax.plot3D([px, px], [py, py], [0, pz], color='black', linestyle=':', linewidth=2)
 
-            # Scatter a red dots for better visibility
-            ax.scatter3D(px, py, pz, color='red', s=50)
-        
-    # Print value ranges
-    #print(f"X range: from {X.min()} to {X.max()}")  
-    #print(f"Y range: from {Y.min()} to {Y.max()}")  
-    #print(f"Z range (Height): from {Z.min()} to {Z.max()}")  
+             # Mark the selected point on the surface
+            ax.scatter3D(px, py, pz, color='red', s=50) 
 
