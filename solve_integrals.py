@@ -42,8 +42,11 @@ def double_integrate(f, nx, ny, x_min, x_max, y_min, y_max):
     total_volume = 0
 
     # Approximate the volume by summing the individual prism volumes
-    for x in np.arange(x_min, x_max, dx):
-        for y in np.arange(y_min,  y_max, dy):
+    for i in range(nx):
+        x = x_min + i * dx
+
+        for j in range(ny):
+            y = y_min + j * dy
             z = f(x, y) # Height of the prism at the lower-left corner
             prism_volume = z * dx * dy
             total_volume += prism_volume
